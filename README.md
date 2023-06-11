@@ -1,3 +1,4 @@
+[![CI](https://github.com/Fatmaguel-Tokcan/todolistapp-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/Fatmaguel-Tokcan/todolistapp-frontend/actions/workflows/ci.yml)
 # todolistapp-frontend
 
 ## Project setup
