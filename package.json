@@ -36,32 +36,6 @@
     "eslint-plugin-vue": "^7.0.0",
     "jest": "^27.0.5"
   },
-
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "@vue/standard"
-    ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
-    },
-    "rules": {},
-    "overrides": [
-      {
-        "files": [
-          "*/_tests_/.{j,t}s?(x)",
-          "*/tests/unit//.spec.{j,t}s?(x)"
-        ],
-        "env": {
-          "jest": true
-        }
-      }
-    ]
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
