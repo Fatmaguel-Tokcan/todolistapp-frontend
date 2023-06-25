@@ -13,7 +13,7 @@
             <a class="nav-link active" href="#">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">Alle TodoLists</a>
+            <a class="nav-link active" href="#">TodoLists</a>
           </li>
         </ul>
         <form class="d-flex" role="search">
@@ -21,6 +21,13 @@
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
      </div>
+    </div>
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="bg-dark p-4">
+        <h6><router-link class="text-white" to="/">Home</router-link></h6>
+        <h6><router-link class="text-white" to="/about">About</router-link></h6>
+        <h6><router-link class="text-white" to="/todoListTable">TodoLists</router-link></h6>
+      </div>
     </div>
   </nav>
 </template>

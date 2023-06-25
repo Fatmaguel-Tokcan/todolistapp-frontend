@@ -1,23 +1,29 @@
 <template>
   <navbar-component></navbar-component>
-  <router-view/>
+  <TodoListTable></TodoListTable>
+  <router-view></router-view>
 </template>
 
 <script>
 
-import NavbarComponent from '@/components/Navbar'
+import NavbarComponent from "@/components/Navbar";
+import TodoListTable from "@/components/TodoListTable";
+
+
 
 export default {
   name: 'App',
-  components: { NavbarComponent }
+  components: {TodoListTable, NavbarComponent}
 }
 </script>
+
+
 
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: start;
-  color: #42b983;
+  color: #9276d5;
 }
 #nav {
   padding: 30px;
@@ -25,10 +31,10 @@ export default {
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #619ed3;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #51c494;
 }
 </style>

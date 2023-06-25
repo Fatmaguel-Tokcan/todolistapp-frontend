@@ -1,11 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-
+import TodoListTable from "@/components/TodoListTable"
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/todoListTable',
+    name: 'todoListTable',
+    component: TodoListTable
   },
   {
     path: '/about',
@@ -19,6 +24,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
+  linkExactActiveClass: 'active',
   routes
 })
 
