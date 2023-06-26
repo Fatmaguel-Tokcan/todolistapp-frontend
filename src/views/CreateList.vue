@@ -190,6 +190,7 @@ export default {
         redirect: 'follow'
       }
 
+
       fetch(endpoint + '/api/v1/todolist/' + id, requestOptions)
         .then(response => response.text())
         .then(async result => {
