@@ -1,36 +1,65 @@
 <template>
-  <section class="vh-100">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <div class="container py-5 h-30">
-      <div class="row d-flex justify-content-center align-items-center">
+  <div style="background-color: #212529"></div>
+  <section class="vh-10">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col">
           <div class="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
             <div class="card-body py-4 px-4 px-md-5">
-              <div class="d-flex justify-content-start align-items-left h-100">
+
+              <p class="h1 text-center mt-3 mb-4 pb-3 text-primary">
+                <i class="fas fa-check-square me-1"></i>
+                <u>ToDoListe</u>
+              </p>
+
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Aufgabentitel</label>
+                <input type="text" class="form-control">
               </div>
-              <div class=""><th scope="col">Todos insgesamt: {{toDos.length}}
-                <a href="CreateList" class="btn btn-outline-primary btn-sm ms-3" role="button"><i class="bi bi-list-task"></i> Neue To-Dos anlegen</a>
-                <button type="submit" class="btn btn-outline-danger btn-sm ms-3" v-on:click="deleteAllToDos"><i class="bi bi-trash3-fill"></i> Alle ToDos löschen</button></th>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Aufgabe</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
               </div>
+
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Datum</label>
+                <label for="formDate"></label>
+                <Datepicker v-model="date" class="form-control" id="minimumView" ></Datepicker>
+              </div>
+              <button type="submit" class="btn btn-secondary" @click.prevent="createToDo">erstellen</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="vh-100">
+    <div class="container py-5 h-30">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col">
+          <div class="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
+            <div class="card-body py-4 px-4 px-md-5">
               <hr class="my-4">
               <table class="table mb-4">
                 <thead class="table-light">
                 <tr>
-                  <th scope="col"><i class="bi bi-ui-checks-grid"></i> Erledigt</th>
-                  <th scope="col"><i class="bi bi-justify"></i> Aufgabentitel</th>
-                  <th scope="col"><i class="bi bi-card-text"></i> Aufgabe</th>
-                  <th scope="col"><i class="bi bi-calendar-x"></i> Datum</th>
+                  <th scope="col">Aufgabentitel</th>
+                  <th scope="col">Aufgabe</th>
+                  <th scope="col">Datum</th>
+                  <th scope="col">Dringlichkeit</th>
+                  <th scope="col">Erledigt</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="toDo in toDos" :key="toDo.id">
-                  <td><input class="form-check-input" type="checkbox" v-model="toDo.erledigt" v-on:click="isFinished (toDo.id)"></td>
-                  <td>{{toDo.todoAufgabentitel }}</td>
-                  <td>{{toDo.aufgabe}}</td>
-                  <td>{{new Date(toDo.datum).toLocaleDateString()}}</td>
-                  <td>
-                    <button type="submit" class="btn btn-outline-danger btn-sm" v-on:click="deleteToDo (toDo.id)"><i class="bi bi-trash3-fill"></i></button>
-                  </td>
+                <tr v-for="ToDoListe in ToDoListe" :key="ToDoListe.id">
+                  <td> <div class="form-check">
+                    <input class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked3"/>
+                  </div></td>
+                  <td>{{ToDoListe.aufgabentitel}}</td>
+                  <td>{{ToDoListe.aufgabe}}</td>
+                  <td>{{new Date(ToDoListe.datum).toDateString()}}</td>
+                  <td>{{ToDoListe.dringlichkeit}}</td>
+                  <td>{{ToDoListe.erledigt}}</td>
                 </tr>
                 </tbody>
               </table>
@@ -41,104 +70,72 @@
     </div>
   </section>
 </template>
-
 <script>
-
+import { ref } from 'vue'
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'List',
-  components: {
-
-  },
-  data: function () {
+  name: 'ToDoListe',
+  data () {
     return {
-      Aufgabentitel: '',
+      aufgabentitel: '',
       aufgabe: '',
-      erledigt: false,
       date: null,
-      toDos: []
+      dringlichkeit: '',
+      erledigt: '',
+      ToDoListe: []
     }
   },
   mounted () {
-    const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/todolist'
     const requestOptions = {
       method: 'GET',
       redirect: 'follow'
     }
-
-    fetch(endpoint, requestOptions)
+    fetch('http://localhost:8080/api/v1/todolist', requestOptions)
       .then(response => response.json())
-      .then(result => result.forEach(toDo => {
-        this.toDos.push(toDo)
+      .then(result => result.forEach(ToDoListe => {
+        this.ToDoListe.push(ToDoListe)
       }))
       .catch(error => console.log('error', error))
+    console.log('http://localhost:8080/api/v1/todolist')
   },
   methods: {
-    deleteToDo (id) {
-      const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
-      const raw = ''
-
-      const requestOptions = {
-        method: 'DELETE',
-        body: raw,
-        redirect: 'follow'
-      }
-
-      fetch(endpoint + '/api/v1/todolist/' + id, requestOptions)
-        .then(response => response.text())
-        .then(async result => {
-          console.log(result)
-          document.location.reload()
-        })
-        .catch(error => console.log('error', error))
-    },
-    isDone (id) {
-      const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
+    createToDo () {
       const myHeaders = new Headers()
       myHeaders.append('Content-Type', 'application/json')
-
+      // eslint-disable-next-line no-undef
+      const date = ref(new Date()).value
+      const dateType = new Date(date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay())
       const raw = JSON.stringify({
-        todoErledigt: this.erledigt = !this.erledigt
-      })
+        aufgabentitel: this.aufgabentitel,
+        aufgabe: this.aufgabe,
+        datum: dateType,
 
+
+      })
       const requestOptions = {
-        method: 'PUT',
+        method: 'POST',
         headers: myHeaders,
         body: raw,
         redirect: 'follow'
       }
-
-      fetch(endpoint + '/api/v1/todolist/' + id + '/erledigt', requestOptions)
+      fetch('http://localhost:8080/api/v1/todolist', requestOptions)
         .then(response => response.text())
-        .then(async result => {
-          console.log(result)
-          document.location.reload()
-        })
-        .catch(error => console.log('error', error))
-    },
-    deleteAllToDos () {
-      const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
-      const raw = ''
-
-      const requestOptions = {
-        method: 'DELETE',
-        body: raw,
-        redirect: 'follow'
-      }
-
-      fetch(endpoint + '/api/v1/todolist/deleteall', requestOptions)
-        .then(response => response.text())
-        .then(async result => {
-          console.log(result)
-          document.location.reload()
-        })
+        .then(result => console.log(result))
         .catch(error => console.log('error', error))
     }
   }
 }
-
 </script>
 
 <style scoped>
-
+#list1 .form-control {
+  border-color: transparent;
+}
+#list1 .form-control:focus {
+  border-color: transparent;
+  box-shadow: none;
+}
+#list1 .select-input.form-control[readonly]:not([disabled]) {
+  background-color: #fbfbfb;
+}
 </style>

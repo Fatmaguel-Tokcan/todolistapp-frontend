@@ -1,66 +1,79 @@
 <template>
+  <Weather></Weather>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col">
-        <div class="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
-          <div class="card-body py-4 px-4 px-md-5">
+  <div className="container py-5 h-100">
+    <div className="row d-flex justify-content-center align-items-center h-100">
+      <div className="col">
+        <div className="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
+          <div className="card-body py-4 px-4 px-md-5">
 
-            <p class="h1 text-center mt-2 mb-4 pb-3 text-primary">
+            <p className="h1 text-center mt-2 mb-4 pb-3 text-primary">
               <u>TO-DOS</u>
             </p>
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">Aufgabentitel</label>
-              <input type="text" class="form-control" v-model="aufgabentitel" required>
+            <div className="mb-3">
+              <label htmlFor="exampleFormControlInput1" className="form-label">Aufgabentitel</label>
+              <input type="text" className="form-control" v-model="aufgabentitel" required>
             </div>
-            <div class="mb-3">
-              <label for="exampleFormControlTextarea1" class="form-label">aufgabe</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" v-model="aufgabe" rows="3" required></textarea>
+            <div className="mb-3">
+              <label htmlFor="exampleFormControlTextarea1" className="form-label">Aufgabe</label>
+              <textarea className="form-control" id="exampleFormControlTextarea1" v-model="aufgabe" rows="3"
+                        required></textarea>
             </div>
 
-            <div class="mb-3">
-              <label for="exampleFormControlTextarea1" class="form-label">datum</label>
-              <label for="formDate"></label>
+            <div className="mb-3">
+              <label htmlFor="exampleFormControlTextarea1" className="form-label">Datum</label>
+              <label htmlFor="formDate"></label>
               <Datepicker class="form-control" id="minimumView" v-model="date"></Datepicker>
             </div>
-            <button type="submit" class="btn btn-primary" v-on:click="createToDo">Erstellen</button>
+            <button type="submit" className="btn btn-primary" v-on:click="createToDo">Erstellen</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-8 offset-md-2">
-    <p class="text-white">Tipp: Um ein task zu ändern müssen die Felder zum erstellen der Tasks nochmal ausgefüllt werden und anschließend auf den "<i class="bi bi-pencil"></i>" Button vom jeweiligen Task geklickt werden.</p>
+  <div className="col-md-8 offset-md-2">
+    <p className="text-white">Tipp: Um ein task zu ändern müssen die Felder zum erstellen der Tasks nochmal
+      ausgefüllt werden und anschließend auf den "<i className="bi bi-pencil"></i>" Button vom jeweiligen Task geklickt
+      werden.</p>
   </div>
-  <section class="vh-100">
-    <div class="container py-5 h-30">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col">
-          <div class="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
-            <div class="card-body py-4 px-4 px-md-5">
-              <div class=""><th scope="col">Todos insgesamt: {{toDos.length}}
-                <a href="List" class="btn btn-outline-primary btn-sm ms-3" role="button">Bereits vorhandene To-Dos</a>
-                <button type="submit" class="btn btn-outline-danger btn-sm ms-3" v-on:click="deleteAllToDos"><i class="bi bi-trash3-fill"></i> Alle ToDos löschen</button></th>
+  <section className="vh-100">
+    <div className="container py-5 h-30">
+      <div className="row d-flex justify-content-center align-items-center h-100">
+        <div className="col">
+          <div className="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
+            <div className="card-body py-4 px-4 px-md-5">
+              <div className="">
+                <th scope="col">Todos insgesamt: {{ toDos.length }}
+                  <a href="List" className="btn btn-outline-primary btn-sm ms-3" role="button">Bereits vorhandene
+                    To-Dos</a>
+                  <button type="submit" className="btn btn-outline-danger btn-sm ms-3" v-on:click="deleteAllToDos"><i
+                    className="bi bi-trash3-fill"></i> Alle ToDos löschen
+                  </button>
+                </th>
               </div>
-              <hr class="my-4">
-              <table class="table mb-4">
-                <thead class="table-light">
+              <hr className="my-4">
+              <table className="table mb-4">
+                <thead className="table-light">
                 <tr>
-                  <th scope="col"><i class="bi bi-ui-checks-grid"></i> Erledigt</th>
-                  <th scope="col"><i class="bi bi-justify"></i> Aufgabentitel</th>
-                  <th scope="col"><i class="bi bi-card-text"></i> aufgabe</th>
-                  <th scope="col"><i class="bi bi-calendar-x"></i> datum</th>
+                  <th scope="col"><i className="bi bi-ui-checks-grid"></i> Erledigt</th>
+                  <th scope="col"><i className="bi bi-justify"></i> Aufgabentitel</th>
+                  <th scope="col"><i className="bi bi-card-text"></i> Aufgabe</th>
+                  <th scope="col"><i className="bi bi-calendar-x"></i> Datum</th>
+                  <th scope="col"><i className="bi bi-pencil-square"></i> überarbeiten</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="toDo in toDos" :key="toDo.id">
-                  <td><input class="form-check-input" type="checkbox" v-model="toDo.erledigt" v-on:click="isFinished (toDo.id)"></td>
-                  <td>{{toDo.todoAufgabentitel}}</td>
-                  <td>{{toDo.aufgabe}}</td>
-                  <td>{{new Date(toDo.datum).toLocaleDateString()}}</td>
+                  <td><input className="form-check-input" type="checkbox" v-model="toDo.erledigt"
+                             v-on:click="isDone (toDo.id)"></td>
+                  <td>{{ toDo.aufgabentitel }}</td>
+                  <td>{{ toDo.aufgabe }}</td>
+                  <td>{{ new Date(toDo.datum).toLocaleDateString() }}</td>
                   <td>
-                    <button type="submit" class="btn btn-outline-primary btn-sm me-2" v-on:click="updateToDo (toDo.id)"><i class="bi bi-pencil"></i></button>
-                    <button type="submit" class="btn btn-outline-danger btn-sm" v-on:click="deleteToDo (toDo.id)"><i class="bi bi-trash3-fill"></i></button>
+                    <button type="submit" className="btn btn-outline-primary btn-sm me-2"
+                            v-on:click="updateToDo (toDo.id)"><i className="bi bi-pencil"></i></button>
+                    <button type="submit" className="btn btn-outline-danger btn-sm" v-on:click="deleteToDo (toDo.id)"><i
+                      className="bi bi-trash3-fill"></i></button>
                   </td>
                 </tr>
                 </tbody>
@@ -74,13 +87,12 @@
 </template>
 <script>
 
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'CreateList',
-  components: {
 
-  },
-  data () {
+  data() {
     return {
       id: '',
       aufgabentitel: '',
@@ -90,7 +102,7 @@ export default {
       toDos: []
     }
   },
-  mounted () {
+  mounted() {
     const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/todolist'
     const requestOptions = {
       method: 'GET',
@@ -105,7 +117,7 @@ export default {
       .catch(error => console.log('error', error))
   },
   methods: {
-    createToDo () {
+    createToDo() {
       if (this.aufgabentitel === '' || this.aufgabe === '') {
         alert('Die Felder "Aufgabentitel" und "Aufgabenbeschreibung" dürfen nicht leer sein')
       } else {
@@ -114,9 +126,9 @@ export default {
         myHeaders.append('Content-Type', 'application/json')
         const raw = JSON.stringify({
 
-          todoAufgabentitel: this.aufgabentitel,
+          aufgabentitel: this.aufgabentitel,
           aufgabe: this.aufgabe,
-          todoErledigt: this.erledigt,
+          erledigt: this.erledigt,
           datum: this.date
         })
 
@@ -136,7 +148,7 @@ export default {
           .catch(error => console.log('error', error))
       }
     },
-    updateToDo (id) {
+    updateToDo(id) {
       if (this.aufgabentitel === '' || this.aufgabe === '') {
         alert('Die Felder "Aufgabentitel" und "Aufgabenbeschreibung" dürfen nicht leer sein')
         const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/todolist'
@@ -158,9 +170,9 @@ export default {
         myHeaders.append('Content-Type', 'application/json')
         const raw = JSON.stringify({
 
-          todoAufgabentitel: this.aufgabentitel,
+          aufgabentitel: this.aufgabentitel,
           aufgabe: this.aufgabe,
-          todoErledigt: this.erledigt,
+          erledigt: this.erledigt,
           datum: this.date
         })
 
@@ -180,7 +192,7 @@ export default {
           .catch(error => console.log('error', error))
       }
     },
-    deleteToDo (id) {
+    deleteToDo(id) {
       const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
       const raw = ''
 
@@ -190,7 +202,6 @@ export default {
         redirect: 'follow'
       }
 
-
       fetch(endpoint + '/api/v1/todolist/' + id, requestOptions)
         .then(response => response.text())
         .then(async result => {
@@ -199,13 +210,13 @@ export default {
         })
         .catch(error => console.log('error', error))
     },
-    isDone (id) {
+    isDone(id) {
       const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
       const myHeaders = new Headers()
       myHeaders.append('Content-Type', 'application/json')
 
       const raw = JSON.stringify({
-        todoErledigt: this.erledigt = !this.erledigt
+        todoStatus: this.status = !this.status
       })
 
       const requestOptions = {
@@ -215,7 +226,7 @@ export default {
         redirect: 'follow'
       }
 
-      fetch(endpoint + '/api/v1/todolist/' + id + '/erledigt', requestOptions)
+      fetch(endpoint + '/api/v1/todolist/' + id + '/status', requestOptions)
         .then(response => response.text())
         .then(async result => {
           console.log(result)
@@ -223,7 +234,7 @@ export default {
         })
         .catch(error => console.log('error', error))
     },
-    deleteAllToDos () {
+    deleteAllToDos() {
       const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
       const raw = ''
 
@@ -251,16 +262,18 @@ export default {
 #list1 .form-control {
   border-color: transparent;
 }
+
 #list1 .form-control:focus {
   border-color: transparent;
   box-shadow: none;
 }
+
 #list1 .select-input.form-control[readonly]:not([disabled]) {
   background-color: #fbfbfb;
 }
-.col-center{
+
+.col-center {
   margin: 0 auto;
 }
 
 </style>
-

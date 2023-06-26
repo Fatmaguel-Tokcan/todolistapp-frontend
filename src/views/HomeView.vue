@@ -1,6 +1,6 @@
 <template>
-
   <section class="vh-100">
+
     <div class="p-3 mb-2 bg-dark text-light">
       <div class="home m-5 h-100 d-flex justify-content-center"  style="background-color: #212529">
       </div>
@@ -27,9 +27,4 @@
 
 <script>
 
-export default {
-  components: {
-
-  }
-}
 </script>
