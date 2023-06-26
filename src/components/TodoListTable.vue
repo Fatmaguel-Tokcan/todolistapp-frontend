@@ -3,22 +3,24 @@
   <table class="table table-bordered">
     <thead>
     <tr>
-      <th scope="col">Überschrift</th>
+      <th scope="col">Aufgabentitel</th>
       <th scope="col">Aufgabe</th>
-      <th scope="col">erledigt</th>
       <th scope="col">Datum</th>
-      <th scope="col">Priorität</th>
+      <th scope="col">Dringlichkeit</th>
+      <th scope="col">Erledigt</th>
 
     </tr>
     </thead>
 
     <tbody>
     <tr v-for="todoList in todoList" :key="todoList.id">
-      <td>{{todoList.überschrift}}</td>
+      <td>{{todoList.aufgabentitel}}</td>
       <td>{{todoList.aufgabe}}</td>
-      <td>{{todoList.erledigt ? 'erledigt':'nicht erledigt'}}</td>
       <td>{{todoList.datum}}</td>
-      <td>{{todoList.priorität }}</td>
+      <td>{{todoList.dringlichkeit ? 'sehr wichtig':'wichtig','nicht wichtig'}}</td>
+      <td>{{todoList.erledigt ? 'erledigt':'nicht erledigt'}}</td>
+
+
     </tr>
     </tbody>
   </table>
