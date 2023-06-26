@@ -5,24 +5,22 @@
 
 <script>
 
-
-import Navbar from "@/components/Navbar";
-
-
+import Navbar from '@/components/Navbar'
 
 export default {
   name: 'App',
-  components: {Navbar}
+  components: { Navbar }
 }
 </script>
-
-
 
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: start;
-  color: #9276d5;
+  color: #42b983;
+}
+body {
+  background-color: #E6E6FA;
 }
 #nav {
   padding: 30px;
@@ -30,10 +28,10 @@ export default {
 
 #nav a {
   font-weight: bold;
-  color: #619ed3;
+  color: #2c3e50;
 }
 
 #nav a.router-link-exact-active {
-  color: #51c494;
+  color: #42b983;
 }
 </style>
