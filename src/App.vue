@@ -1,15 +1,15 @@
 <template>
-  <navbar-component></navbar-component>
+  <navbar></navbar>
   <router-view/>
 </template>
 
 <script>
 
-import NavbarComponent from '@/components/Navbar'
+import Navbar from '@/components/Navbar'
 
 export default {
   name: 'App',
-  components: { NavbarComponent }
+  components: { Navbar }
 }
 </script>
 
@@ -18,6 +18,9 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: start;
   color: #42b983;
+}
+body {
+  background-color: #E6E6FA;
 }
 #nav {
   padding: 30px;
