@@ -1,19 +1,18 @@
 <template>
-  <navbar-component></navbar-component>
-  <TodoListTable></TodoListTable>
-  <router-view></router-view>
+  <navbar></navbar>
+  <router-view/>
 </template>
 
 <script>
 
-import NavbarComponent from "@/components/Navbar";
-import TodoListTable from "@/components/TodoListTable";
+
+import Navbar from "@/components/Navbar";
 
 
 
 export default {
   name: 'App',
-  components: {TodoListTable, NavbarComponent}
+  components: {Navbar}
 }
 </script>
 
