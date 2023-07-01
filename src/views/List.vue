@@ -1,10 +1,10 @@
 <template>
-  <div style="background-color: #212529"></div>
+  <div style="background-color: #9d8bcb"></div>
   <section class="vh-10">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col">
-          <div class="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
+          <div class="card" id="list2" style="border-radius: .75rem; background-color: #eff1f2;">
             <div class="card-body py-4 px-4 px-md-5">
 
               <p class="h1 text-center mt-3 mb-4 pb-3 text-primary">
@@ -13,7 +13,7 @@
               </p>
 
               <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Aufgabentitel</label>
+                <label class="form-label">Aufgabentitel</label>
                 <input type="text" class="form-control">
               </div>
               <div class="mb-3">
@@ -23,7 +23,7 @@
 
               <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Datum</label>
-                <label for="formDate"></label>
+                <label></label>
                 <Datepicker v-model="date" class="form-control" id="minimumView" ></Datepicker>
               </div>
               <button type="submit" class="btn btn-secondary" @click.prevent="createToDo">erstellen</button>
@@ -47,19 +47,18 @@
                   <th scope="col">Aufgabe</th>
                   <th scope="col">Datum</th>
                   <th scope="col">Dringlichkeit</th>
-                  <th scope="col">Erledigt</th>
+                  <th scope="col"><i className="bi bi-ui-checks-grid"></i> Erledigt</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="ToDoListe in ToDoListe" :key="ToDoListe.id">
-                  <td> <div class="form-check">
-                    <input class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked3"/>
-                  </div></td>
+
                   <td>{{ToDoListe.aufgabentitel}}</td>
                   <td>{{ToDoListe.aufgabe}}</td>
                   <td>{{new Date(ToDoListe.datum).toDateString()}}</td>
                   <td>{{ToDoListe.dringlichkeit}}</td>
-                  <td>{{ToDoListe.erledigt}}</td>
+                  <td><input className="form-check-input" type="checkbox" v-model="ToDoListe.erledigt"
+                             v-on:click="isDone (ToDoListe.id)"></td>
                 </tr>
                 </tbody>
               </table>
@@ -80,8 +79,7 @@ export default {
       aufgabentitel: '',
       aufgabe: '',
       date: null,
-      dringlichkeit: '',
-      erledigt: '',
+      dringlichkeit: true,
       ToDoListe: []
     }
   },
@@ -99,7 +97,7 @@ export default {
     console.log('http://localhost:8080/api/v1/todolist')
   },
   methods: {
-    createToDo () {
+    createToDoList () {
       const myHeaders = new Headers()
       myHeaders.append('Content-Type', 'application/json')
       // eslint-disable-next-line no-undef
@@ -109,9 +107,10 @@ export default {
         aufgabentitel: this.aufgabentitel,
         aufgabe: this.aufgabe,
         datum: dateType,
-
+        dringlichkeit: false
 
       })
+
       const requestOptions = {
         method: 'POST',
         headers: myHeaders,
@@ -121,6 +120,30 @@ export default {
       fetch('http://localhost:8080/api/v1/todolist', requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
+        .catch(error => console.log('error', error))
+    },
+    isDone(id) {
+      const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
+      const myHeaders = new Headers()
+      myHeaders.append('Content-Type', 'application/json')
+
+      const raw = JSON.stringify({
+        todoStatus: this.status = !this.status
+      })
+
+      const requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      }
+
+      fetch(endpoint + '/api/v1/todolist/' + id + '/status', requestOptions)
+        .then(response => response.text())
+        .then(async result => {
+          console.log(result)
+          document.location.reload()
+        })
         .catch(error => console.log('error', error))
     }
   }
@@ -139,4 +162,3 @@ export default {
   background-color: #fbfbfb;
 }
 </style>
-
