@@ -1,6 +1,7 @@
 <template>
   <section class="vh-100">
 
+
     <div class="p-3 mb-2 bg-dark text-light">
       <div class="home m-5 h-100 d-flex justify-content-center"  style="background-color: #a2baf2">
       </div>

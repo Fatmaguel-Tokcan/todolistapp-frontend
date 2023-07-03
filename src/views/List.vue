@@ -85,6 +85,7 @@ export default {
         erledigt: this.erledigt = !this.erledigt
       })
 
+
       const requestOptions = {
         method: 'PUT',
         headers: myHeaders,
