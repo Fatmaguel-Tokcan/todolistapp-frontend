@@ -1,7 +1,7 @@
 <template>
   <div>
     <input v-model="searchQuery" type="text" placeholder="Search">
-    <button @click="searchTodos">Search</button>
+    <button @click="searchToDoListe">Search</button>
 
     <ul>
       <li v-for="ToDoListe in filteredToDoListe" :key="ToDoListe.id">
