@@ -1,67 +1,76 @@
 <template>
-  <div style="background-color: #382f50"></div>
-  <section class="vh-10">
-
-              <p class="h1 text-center text-primary">
-                <u>ToDoListe</u>
-              </p>
-  </section>
-  <section class="vh-100">
-    <div class="container py-5 h-30">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col">
-          <div class="card" id="list1" style="border-radius: .75rem; background-color: #c7bce5;">
-            <div class="card-body py-4 px-4 px-md-5">
-              <hr class="my-4">
-              <table class="table mb-4">
-                <thead class="table-light">
-                <tr>
-                  <th scope="col"><i class="bi bi-justify"></i> Aufgabentitel</th>
-                  <th scope="col"><i class="bi bi-card-text"></i> Aufgabe</th>
-                  <th scope="col"><i class="bi bi-calendar-x"></i> Fälligkeitsdatum</th>
-                  <th scope="col"><i class="bi bi-card-text"></i> Dringlichkeit</th>
-                  <th scope="col"><i className="bi bi-ui-checks-grid"></i> Erledigt</th>
-                  <th scope="col"><i class="bi bi-pencil-square"></i> überarbeiten</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="ToDoList in ToDoListe" :key="ToDoList.id">
-
-                  <td>{{ToDoList.aufgabentitel}}</td>
-                  <td>{{ToDoList.aufgabe}}</td>
-                  <td>{{new Date(ToDoList.datum).toDateString()}}</td>
-                  <td>{{ToDoList.dringlichkeit}}</td>
-                  <td><input className="form-check-input" type="checkbox" v-model="ToDoList.erledigt"
-                             v-on:click="isDone (ToDoList.id)"></td>
-                  <td>
-                    <button type="submit" class="btn btn-outline-danger btn-sm" v-on:click="deleteToDoListe (ToDoList.id)"><i class="bi bi-trash3-fill"></i></button>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <div class="container py-5 h-100" id="list1">
+    <div class="col">
+      <div class="mb-3">
+        <label for="filterDropdown" class="form-label">Filter:</label>
+        <select class="form-select" id="filterDropdown" v-model="filterOption">
+          <option value="default">None</option>
+          <option value="alphabet">Alphabet</option>
+          <option value="urgency">Priorität</option>
+          <option value="date">Fälligkeitsdatum</option>
+        </select>
       </div>
+      <hr class="my-4">
+      <table class="table mb-4">
+        <thead class="table-light">
+        <tr>
+          <th scope="col"><i class="bi bi-justify"></i> Aufgabentitel</th>
+          <th scope="col"><i class="bi bi-card-text"></i> Aufgabe</th>
+          <th scope="col"><i class="bi bi-calendar-x"></i> Fälligkeitsdatum</th>
+          <th scope="col"><i class="bi bi-card-text"></i> Priorität</th>
+          <th scope="col"><i class="bi bi-ui-checks-grid"></i> Erledigt</th>
+          <th scope="col"><i class="bi bi-pencil-square"></i> überarbeiten</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="ToDoList in filteredToDoListe" :key="ToDoList.id">
+          <td>
+            <span v-if="selectedToDoList !== ToDoList.id">{{ ToDoList.aufgabentitel }}</span>
+            <form v-else @submit.prevent="updateToDoListe(ToDoList.id)">
+              <input v-model="getSelectedToDoList(ToDoList.id).updatedAufgabentitel" />
+              <button type="submit">Speichern</button>
+            </form>
+          </td>
+          <td>{{ ToDoList.aufgabe }}</td>
+          <td>{{ new Date(ToDoList.datum).toLocaleDateString() }}</td>
+          <td>{{ ToDoList.dringlichkeit }}</td>
+          <td>
+            <input type="checkbox" v-model="ToDoList.erledigt" v-on:click="toggleDone(ToDoList)">
+          </td>
+          <td>
+            <button v-if="selectedToDoList !== ToDoList.id" @click="setSelectedToDoList(ToDoList.id)" class="btn btn-primary mr-5">
+              <i class="bi bi-pencil" :class="{ 'active': selectedToDoList === ToDoList.id }"></i>
+            </button>
+            <button @click="deleteToDoListe(ToDoList.id)" class="btn btn-danger ml-5">
+              <i class="bi bi-x-circle-fill" :class="{ 'active': selectedToDoList === ToDoList.id }"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-  </section>
+  </div>
 </template>
-<script>
 
+<script>
 export default {
-  // eslint-disable-next-line vue/multi-word-component-names
   name: 'ToDoListe',
-  data () {
-    return {
+  data() {
+    return{
+    selectedToDoList: null,
+      id: '',
       aufgabentitel: '',
       aufgabe: '',
       date: null,
       dringlichkeit: '',
-      erledigt: false,
-      ToDoListe: []
+      erledigt:false,
+      updatedAufgabentitel: '',
+      ToDoListe: [],
+      filterOption: 'default'
     }
   },
-  mounted () {
+  mounted() {
     const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/todolist'
     const requestOptions = {
       method: 'GET',
@@ -70,13 +79,29 @@ export default {
 
     fetch(endpoint, requestOptions)
       .then(response => response.json())
-      .then(result => result.forEach(ToDoList => {
-        this.ToDoListe.push(ToDoList)
-      }))
+      .then(result => {
+        result.forEach(ToDoList => {
+          ToDoList.updatedAufgabentitel = '';
+          this.ToDoListe.push(ToDoList);
+        });
+      })
       .catch(error => console.log('error', error))
   },
+  computed: {
+    filteredToDoListe() {
+      if (this.filterOption === 'alphabet') {
+        return this.ToDoListe.slice().sort((a, b) => a.aufgabentitel.localeCompare(b.aufgabentitel))
+      } else if (this.filterOption === 'urgency') {
+        return this.ToDoListe.slice().sort((a, b) => a.dringlichkeit.localeCompare(b.dringlichkeit))
+      } else if (this.filterOption === 'date') {
+        return this.ToDoListe.slice().sort((a, b) => new Date(a.datum) - new Date(b.datum))
+      } else {
+        return this.ToDoListe
+      }
+    }
+  },
   methods: {
-    isDone(id) {
+    toggleDone(id) {
       const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
       const myHeaders = new Headers()
       myHeaders.append('Content-Type', 'application/json')
@@ -84,7 +109,6 @@ export default {
       const raw = JSON.stringify({
         erledigt: this.erledigt = !this.erledigt
       })
-
 
       const requestOptions = {
         method: 'PUT',
@@ -95,13 +119,52 @@ export default {
 
       fetch(endpoint + '/api/v1/todolist/' + id + '/erledigt', requestOptions)
         .then(response => response.text())
-        .then(async result => {
+        .then(result => {
           console.log(result)
           document.location.reload()
         })
         .catch(error => console.log('error', error))
     },
-    deleteToDoListe (id) {
+    getSelectedToDoList(id) {
+      return this.ToDoListe.find(toDoList => toDoList.id === id);
+    },
+
+    setSelectedToDoList(id) {
+      this.selectedToDoList = id;
+      const selectedToDoList = this.ToDoListe.find(toDoList => toDoList.id === id);
+      this.aufgabentitel = selectedToDoList.aufgabentitel;
+      this.aufgabe = selectedToDoList.aufgabe;
+      this.date = selectedToDoList.datum;
+      this.dringlichkeit = selectedToDoList.dringlichkeit;
+    },
+    updateToDoListe(id) {
+      const updatedAufgabentitel = this.getSelectedToDoList(id).updatedAufgabentitel;
+      const endpoint = process.env.VUE_APP_BACKEND_BASE_URL;
+      const myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      const raw = JSON.stringify({
+        aufgabentitel: updatedAufgabentitel,
+        aufgabe: this.aufgabe,
+        datum: this.date,
+        dringlichkeit: this.dringlichkeit,
+        erledigt: false
+      });
+      const requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+      fetch(endpoint + '/api/v1/todolist/' + id, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+          console.log(result);
+          document.location.reload();
+        })
+        .catch(error => console.log('error', error));
+      this.selectedToDoList = null;
+    },
+    deleteToDoListe(id) {
       const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
       const raw = ''
 
@@ -113,13 +176,13 @@ export default {
 
       fetch(endpoint + '/api/v1/todolist/' + id, requestOptions)
         .then(response => response.text())
-        .then(async result => {
+        .then(result => {
           console.log(result)
           document.location.reload()
         })
         .catch(error => console.log('error', error))
     },
-    deleteAllToDoListe () {
+    deleteAllToDoListe() {
       const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
       const raw = ''
 
@@ -131,26 +194,27 @@ export default {
 
       fetch(endpoint + '/api/v1/todolist/deleteAll', requestOptions)
         .then(response => response.text())
-        .then(async result => {
+        .then(result => {
           console.log(result)
           document.location.reload()
         })
         .catch(error => console.log('error', error))
     }
-
   }
 }
 </script>
 
+
 <style scoped>
-#list1 .form-control {
-  border-color: transparent;
+#list1 button.btn-primary {
+  background-color: #42a6ff;
+  color: white;
 }
-#list1 .form-control:focus {
-  border-color: transparent;
-  box-shadow: none;
-}
-#list1 .select-input.form-control[readonly]:not([disabled]) {
-  background-color: #c7bce5;
+
+#list1 button.btn-danger {
+  background-color: rgba(232, 93, 93, 0.98);
+  color: white;
 }
 </style>
+
+

@@ -1,114 +1,93 @@
 <template>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  <div className="container py-5 h-100">
-    <div className="row d-flex justify-content-center align-items-center h-100">
-      <div className="col">
-        <div className="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
-          <div className="card-body py-4 px-4 px-md-5">
-
-            <p class="h1 text-center text-primary">
-              <u>ToDoListe</u>
-            </p>
-            <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">Aufgabentitel</label>
-              <input type="text" className="form-control" v-model="aufgabentitel" required>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleFormControlTextarea1" className="form-label">Aufgabe</label>
-              <textarea className="form-control" id="exampleFormControlTextarea1" v-model="aufgabe" rows="3"
-                        required></textarea>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleFormControlTextarea1" className="form-label">Fälligkeitsdatum</label>
-              <label htmlFor="formDate"></label>
-              <Datepicker class="form-control" id="minimumView" v-model="date"></Datepicker>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="dringlichkeit" className="form-label">Priorität</label>
-              <select class="form-select form-select-sm" id="exampleFormControlTextarea2" v-model="dringlichkeit" required>
-                <option value="" selected disabled>Wählen Sie bitte</option>
-                <option value="HOCH">hoch</option>
-                <option value="MITTEL">mittel</option>
-                <option value="NIEDRIG">niedrig</option>
-              </select>
-            </div>
-            <button type="submit" className="btn btn-primary" v-on:click="createToDoListe">Hinzufügen</button>
-          </div>
-        </div>
+  <div class="container py-5 h-100">
+    <div class="col">
+      <div class="mb-3">
+        <label htmlFor="exampleFormControlInput1" class="form-label">Aufgabentitel</label>
+        <input type="text" class="form-control" v-model="aufgabentitel" required>
       </div>
+      <div class="mb-3">
+        <label htmlFor="exampleFormControlTextarea1" class="form-label">Aufgabe</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" v-model="aufgabe" rows="3" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label htmlFor="exampleFormControlTextarea1" class="form-label">Fälligkeitsdatum</label>
+        <label htmlFor="formDate"></label>
+        <input type="date" class="form-control" v-model="date" required>
+      </div>
+      <div class="mb-3">
+        <label htmlFor="dringlichkeit" class="form-label">Priorität</label>
+        <select class="form-select form-select-sm" id="exampleFormControlTextarea2" v-model="dringlichkeit" required>
+          <option value="" selected disabled>Wählen Sie bitte</option>
+          <option value="HOCH">hoch</option>
+          <option value="MITTEL">mittel</option>
+          <option value="NIEDRIG">niedrig</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary px-2 mx-2" v-on:click="createToDoListe">Hinzufügen</button>
     </div>
   </div>
-  <div className="col-md-8 offset-md-2">
-    <p className="text-white">Tipp: Um ein task zu ändern müssen die Felder zum erstellen der Tasks nochmal
-      ausgefüllt werden und anschließend auf den "<i className="bi bi-pencil"></i>" Button vom jeweiligen Task geklickt
-      werden.</p>
+  <div class="col-md-8 offset-md-2">
   </div>
-  <section className="vh-100">
-    <div className="container py-5 h-30">
-      <div className="row d-flex justify-content-center align-items-center h-100">
-        <div className="col">
-          <div className="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
-            <div className="card-body py-4 px-4 px-md-5">
-              <div className="">
-                <th scope="col">ToDoListen insgesamt: {{ ToDoListe.length }}
-                  <a href="List" className="btn btn-outline-primary btn-sm ms-3" role="button">Bereits vorhandene
-                    ToDoListe</a>
-                  <button type="submit" className="btn btn-outline-danger btn-sm ms-3" v-on:click="deleteAllToDoListe"><i
-                    className="bi bi-trash3-fill"></i> Alle ToDoListe löschen
-                  </button>
-                </th>
-              </div>
-              <hr className="my-4">
-              <table className="table mb-4">
-                <thead className="table-light">
-                <tr>
-                  <th scope="col"><i className="bi bi-justify"></i> Aufgabentitel</th>
-                  <th scope="col"><i className="bi bi-card-text"></i> Aufgabe</th>
-                  <th scope="col"><i className="bi bi-calendar-x"></i> Fälligkeitsdatum</th>
-                  <th scope="col"><i className="bi bi-card-text"></i> Priorität</th>
-                  <th scope="col"><i className="bi bi-pencil-square"></i> überarbeiten</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="ToDoList in ToDoListe" :key="ToDoList.id">
-                  <td>{{ ToDoList.aufgabentitel }}</td>
-                  <td>{{ ToDoList.aufgabe }}</td>
-                  <td>{{ new Date(ToDoList.datum).toLocaleDateString() }}</td>
-                  <td>{{ ToDoList.dringlichkeit}}</td>
-                  <td>
-                    <button type="submit" className="btn btn-outline-primary btn-sm me-2"
-                            v-on:click="updateToDoListe (ToDoList.id)"><i className="bi bi-pencil"></i></button>
-                    <button type="submit" className="btn btn-outline-danger btn-sm" v-on:click="deleteToDoListe (ToDoList.id)"><i
-                      className="bi bi-trash3-fill"></i></button>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+  <section class="vh-100">
+    <div class="container py-5 h-30">
+      <div class="col">
+        <div class=""><th scope="col">Todos insgesamt: {{ToDoListe.length}}
+          <a href="List" class="btn btn-outline-primary btn-sm ms-3" role="button">Bereits vorhandene To-Dos</a>
+          <button type="submit" class="btn btn-outline-danger btn-sm ms-3" v-on:click="deleteAllToDoListe"><i class="bi bi-trash3-fill"></i> Alle ToDos löschen</button></th>
+        </div>
+        <table class="table mb-4">
+          <thead class="table-light">
+          <tr>
+            <th scope="col"><i class="bi bi-justify"></i> Aufgabentitel</th>
+            <th scope="col"><i class="bi bi-card-text"></i> Aufgabe</th>
+            <th scope="col"><i class="bi bi-calendar4"></i> Fälligkeitsdatum</th>
+            <th scope="col"><i class="bi bi-list-ol"></i> Priorität</th>
+            <th scope="col"><i class="bi bi-pencil-square"></i> überarbeiten</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="ToDoList in ToDoListe" :key="ToDoList.id">
+            <td>
+              <span v-if="selectedToDoList !== ToDoList.id">{{ ToDoList.aufgabentitel }}</span>
+              <form v-else @submit.prevent="updateToDoListe(ToDoList.id)">
+                <input v-model="getSelectedToDoList(ToDoList.id).updatedAufgabentitel" />
+                <button type="submit">Speichern</button>
+              </form>
+            </td>
+            <td>{{ ToDoList.aufgabe }}</td>
+            <td>{{ new Date(ToDoList.datum).toLocaleDateString() }}</td>
+            <td>{{ ToDoList.dringlichkeit }}</td>
+            <td>
+              <button v-if="selectedToDoList !== ToDoList.id" @click="setSelectedToDoList(ToDoList.id)"><i class="bi bi-pencil"></i></button>
+              <button @click="deleteToDoListe(ToDoList.id)"><i class="bi bi-x-circle-fill"></i></button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
         </div>
       </div>
-    </div>
   </section>
 </template>
+
 <script>
-
-
-
 export default {
-  // eslint-disable-next-line vue/multi-word-component-names
   name: 'CreateList',
 
   data() {
     return {
+      selectedToDoList: null,
       id: '',
       aufgabentitel: '',
       aufgabe: '',
       date: null,
       dringlichkeit: '',
+      erledigt:false,
+      updatedAufgabentitel: '',
       ToDoListe: []
     }
   },
+
   mounted() {
     const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/todolist'
     const requestOptions = {
@@ -118,25 +97,29 @@ export default {
 
     fetch(endpoint, requestOptions)
       .then(response => response.json())
-      .then(result => result.forEach(ToDoList => {
-        this.ToDoListe.push(ToDoList)
-      }))
+      .then(result => {
+        result.forEach(ToDoList => {
+          // Initialisiere das updatedAufgabentitel-Feld für jedes ToDo-Element
+          ToDoList.updatedAufgabentitel = '';
+          this.ToDoListe.push(ToDoList);
+        });
+      })
       .catch(error => console.log('error', error))
   },
   methods: {
     createToDoListe() {
-      if (this.aufgabentitel === '' || this.aufgabe === ''|| this.dringlichkeit === '') {
-        alert('Die Felder "Aufgabentitel" und "Aufgabenbeschreibung" und Priorität dürfen nicht leer sein')
+      if (this.aufgabentitel === '' || this.aufgabe === '' || this.dringlichkeit === '') {
+        alert('Die Felder "Aufgabentitel", "Aufgabenbeschreibung" und "Priorität" dürfen nicht leer sein.')
       } else {
         const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/todolist'
         const myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
         const raw = JSON.stringify({
-
           aufgabentitel: this.aufgabentitel,
           aufgabe: this.aufgabe,
           datum: this.date,
-          dringlichkeit: this.dringlichkeit
+          dringlichkeit: this.dringlichkeit,
+          erledigt: false // Setze erledigt auf false
         })
 
         const requestOptions = {
@@ -155,50 +138,46 @@ export default {
           .catch(error => console.log('error', error))
       }
     },
+    getSelectedToDoList(id) {
+      return this.ToDoListe.find(toDoList => toDoList.id === id);
+    },
+
+    setSelectedToDoList(id) {
+      this.selectedToDoList = id;
+      const selectedToDoList = this.ToDoListe.find(toDoList => toDoList.id === id);
+      this.aufgabentitel = selectedToDoList.aufgabentitel;
+      this.aufgabe = selectedToDoList.aufgabe;
+      this.date = selectedToDoList.datum;
+      this.dringlichkeit = selectedToDoList.dringlichkeit;
+    },
     updateToDoListe(id) {
-      if (this.aufgabentitel === '' || this.aufgabe === ''|| this.dringlichkeit === '') {
-        alert('Die Felder "Aufgabentitel" und "Aufgabenbeschreibung" und "Priorität" dürfen nicht leer sein')
-        const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/todolist'
-        const raw = ''
-
-        const requestOptions = {
-          method: 'GET',
-          body: raw,
-          redirect: 'follow'
-        }
-
-        fetch(endpoint + '/api/v1/todolist/' + id, requestOptions)
-          .then(response => response.text())
-          .then(result => console.log(result))
-          .catch(error => console.log('error', error))
-      } else {
-        const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
-        const myHeaders = new Headers()
-        myHeaders.append('Content-Type', 'application/json')
+        const updatedAufgabentitel = this.getSelectedToDoList(id).updatedAufgabentitel;
+        const endpoint = process.env.VUE_APP_BACKEND_BASE_URL;
+        const myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
         const raw = JSON.stringify({
-
-          aufgabentitel: this.aufgabentitel,
+          aufgabentitel: updatedAufgabentitel,
           aufgabe: this.aufgabe,
           datum: this.date,
-          dringlichkeit: this.dringlichkeit
-        })
-
+          dringlichkeit: this.dringlichkeit,
+          erledigt: false
+        });
         const requestOptions = {
           method: 'PUT',
           headers: myHeaders,
           body: raw,
           redirect: 'follow'
-        }
-
+        };
         fetch(endpoint + '/api/v1/todolist/' + id, requestOptions)
           .then(response => response.text())
-          .then(async result => {
-            console.log(result)
-            document.location.reload()
+          .then(result => {
+            console.log(result);
+            document.location.reload();
           })
-          .catch(error => console.log('error', error))
-      }
-    },
+          .catch(error => console.log('error', error));
+        this.selectedToDoList = null;
+      },
+
     deleteToDoListe(id) {
       const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
       const raw = ''
@@ -217,13 +196,13 @@ export default {
         })
         .catch(error => console.log('error', error))
     },
-    isDone(id) {
+    toggleDone(ToDoList) {
       const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
       const myHeaders = new Headers()
       myHeaders.append('Content-Type', 'application/json')
 
       const raw = JSON.stringify({
-       erledigt: this.erledigt = !this.erledigt
+        erledigt: !ToDoList.erledigt
       })
 
       const requestOptions = {
@@ -233,9 +212,9 @@ export default {
         redirect: 'follow'
       }
 
-      fetch(endpoint + '/api/v1/todolist/' + id + '/erledigt', requestOptions)
+      fetch(endpoint + '/api/v1/todolist/' + ToDoList.id + '/erledigt', requestOptions)
         .then(response => response.text())
-        .then(async result => {
+        .then(result => {
           console.log(result)
           document.location.reload()
         })
@@ -265,6 +244,10 @@ export default {
 </script>
 
 <style scoped>
+.container {
+
+  height: 50vh;
+}
 
 #list1 .form-control {
   border-color: transparent;

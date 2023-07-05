@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 
-import Datepicker from 'vue3-datepicker'
+import VueDatePicker from '@vuepic/vue-datepicker';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
 
@@ -11,7 +11,7 @@ import 'bootstrap/dist/js/bootstrap.js'
 // createApp(App).use(router).mount('#app')
 const app = createApp(App)
 // eslint-disable-next-line vue/multi-word-component-names
-app.component('Datepicker', Datepicker)
+app.component('VueDatePicker', VueDatePicker);
 app.use(router)
 app.mount('#app')
 
