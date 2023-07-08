@@ -117,4 +117,5 @@ describe('CreateList', () => {
     delete window.location.reload;
     window.location.reload = reloadMock;
   });
+
 });
