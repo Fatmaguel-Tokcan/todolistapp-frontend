@@ -90,7 +90,7 @@ export default {
   name: 'ToDoListe',
   data() {
     return{
-    selectedToDoList: null,
+      selectedToDoList: null,
       id: '',
       aufgabentitel: '',
       aufgabe: '',
@@ -134,28 +134,28 @@ export default {
   },
   methods: {
     toggleDone(id) {
-      const endpoint = process.env.VUE_APP_BACKEND_BASE_URL
-      const myHeaders = new Headers()
-      myHeaders.append('Content-Type', 'application/json')
+      const endpoint = process.env.VUE_APP_BACKEND_BASE_URL;
+      const myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
 
       const raw = JSON.stringify({
-        erledigt: this.erledigt = !this.erledigt
-      })
+        erledigt: this.erledigt === false // Korrektur: Gleichheitsoperator verwenden
+      });
 
       const requestOptions = {
         method: 'PUT',
         headers: myHeaders,
         body: raw,
         redirect: 'follow'
-      }
+      };
 
       fetch(endpoint + '/api/v1/todolist/' + id + '/erledigt', requestOptions)
         .then(response => response.text())
         .then(result => {
-          console.log(result)
-          document.location.reload()
+          console.log(result);
+          document.location.reload();
         })
-        .catch(error => console.log('error', error))
+        .catch(error => console.log('error', error));
     },
     getSelectedToDoList(id) {
       return this.ToDoListe.find(toDoList => toDoList.id === id);
@@ -281,6 +281,4 @@ export default {
   padding: 0.25rem 0.75rem; /* Adjust the padding as needed */
 }
 </style>
-
-
 

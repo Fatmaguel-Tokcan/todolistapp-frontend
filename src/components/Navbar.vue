@@ -21,9 +21,6 @@
           <li class="nav-item">
             <router-link class="nav-link" style="color: black" to="/search">Suche</router-link>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link" style="color: black" to="/archiv">Archiv</router-link>
-          </li>
         </ul>
       </div>
     </div>
@@ -34,7 +31,6 @@
       <h6><router-link class="text-black" to="/createList">Erstellen</router-link></h6>
       <h6><router-link class="text-black" to="/list">ToDoListe</router-link></h6>
       <h6><router-link class="text-black" to="/search">Suche</router-link></h6>
-      <h6><router-link class="text-black" to="/archiv">Archiv</router-link></h6>
     </div>
   </div>
 </template>
