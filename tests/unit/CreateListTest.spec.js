@@ -1,9 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 import CreateList from '@/views/CreateList.vue';
-import flushPromises from 'flush-promises';
 
-// Importiere die mocks.js-Datei
-import '../../mocks.js';
 
 describe('CreateList', () => {
   let wrapper;
