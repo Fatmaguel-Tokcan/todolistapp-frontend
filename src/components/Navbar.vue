@@ -13,24 +13,28 @@
             <router-link class="nav-link active" style="color: black" aria-current="page" to="/">Home</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" style="color: black" to="/createList">To-Dos erzeugen</router-link>
+            <router-link class="nav-link" style="color: black" to="/createList">Erstellen</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" style="color: black" to="/list">Liste</router-link>
+            <router-link class="nav-link" style="color: black" to="/list">ToDoListe</router-link>
           </li>
-          <li>
-            <router-link class="nav-link" style="color: black" to="/search">Search</router-link>
+          <li class="nav-item">
+            <router-link class="nav-link" style="color: black" to="/search">Suche</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" style="color: black" to="/archiv">Archiv</router-link>
           </li>
         </ul>
-
       </div>
     </div>
   </nav>
   <div class="collapse" id="navbarToggleExternalContent">
     <div class="bg-dark p-4">
       <h6><router-link class="text-black" to="/">Home</router-link></h6>
-      <h6><router-link class="text-black" to="/createList">To-Dos erstellen</router-link></h6>
-      <h6><router-link class="text-black" to="/list">To-Do-Liste</router-link></h6>
+      <h6><router-link class="text-black" to="/createList">Erstellen</router-link></h6>
+      <h6><router-link class="text-black" to="/list">ToDoListe</router-link></h6>
+      <h6><router-link class="text-black" to="/search">Suche</router-link></h6>
+      <h6><router-link class="text-black" to="/archiv">Archiv</router-link></h6>
     </div>
   </div>
 </template>
@@ -39,7 +43,9 @@
 
 
 export default {
-  name: 'NavBar'
+  name: 'NavBar',
+  components: {}
+
 
 }
 </script>

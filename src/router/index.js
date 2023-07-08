@@ -26,7 +26,6 @@ const routes = [
     name: 'search',
     component: SearchTodo
   }
-
 ]
 
 const router = createRouter({

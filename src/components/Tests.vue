@@ -3,7 +3,7 @@
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col">
-        <div class="card" id="list" style="border-radius: .75rem; background-color: rgba(241,239,242,0.84);">
+        <div class="card" id="list" style="border-radius: .75rem;">
           <div class="card-body py-4 px-4 px-md-5">
 
             <p class="h1 text-center text-primary">

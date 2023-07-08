@@ -1,40 +1,49 @@
 <template>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  <div class="container py-5 h-100">
+  <div class="container py-5 h-100" id="list1">
     <div class="col">
       <div class="mb-3">
-        <label htmlFor="exampleFormControlInput1" class="form-label">Aufgabentitel</label>
+        <label htmlFor="exampleFormControlInput1" class="form-label" style="color :#6b8de7" >Aufgabentitel</label>
         <input type="text" class="form-control" v-model="aufgabentitel" required>
       </div>
       <div class="mb-3">
-        <label htmlFor="exampleFormControlTextarea1" class="form-label">Aufgabe</label>
+        <label htmlFor="exampleFormControlTextarea1" class="form-label" style="color :#6b8de7">Aufgabe</label>
         <textarea class="form-control" id="exampleFormControlTextarea1" v-model="aufgabe" rows="3" required></textarea>
       </div>
       <div class="mb-3">
-        <label htmlFor="exampleFormControlTextarea1" class="form-label">Fälligkeitsdatum</label>
+        <label htmlFor="exampleFormControlTextarea1" class="form-label" style="color :#6b8de7">Fälligkeitsdatum</label>
         <label htmlFor="formDate"></label>
         <input type="date" class="form-control" v-model="date" required>
       </div>
-      <div class="mb-3">
-        <label htmlFor="dringlichkeit" class="form-label">Priorität</label>
-        <select class="form-select form-select-sm" id="exampleFormControlTextarea2" v-model="dringlichkeit" required>
-          <option value="" selected disabled>Wählen Sie bitte</option>
-          <option value="HOCH">hoch</option>
-          <option value="MITTEL">mittel</option>
-          <option value="NIEDRIG">niedrig</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary px-2 mx-2" v-on:click="createToDoListe">Hinzufügen</button>
+    <div class="mb-3">
+      <label htmlFor="dringlichkeit" class="form-label" style="color :#6b8de7">Priorität</label>
+      <select class="form-select form-select-sm" id="exampleFormControlTextarea2" v-model="dringlichkeit" required>
+        <option value="" selected disabled>Wählen Sie bitte</option>
+        <option value="HOCH">hoch</option>
+        <option value="MITTEL">mittel</option>
+        <option value="NIEDRIG">niedrig</option>
+      </select>
     </div>
+    <button type="submit" class="btn btn-primary px-2 mx-2" style="background-color: #6b8de7; color :#fffefe " v-on:click="createToDoListe">Hinzufügen</button>
+  </div>
   </div>
   <div class="col-md-8 offset-md-2">
   </div>
   <section class="vh-100">
-    <div class="container py-5 h-30">
+    <div class="container py-5 h-30" id="list1">
       <div class="col">
-        <div class=""><th scope="col">Todos insgesamt: {{ToDoListe.length}}
-          <a href="List" class="btn btn-outline-primary btn-sm ms-3" role="button">Bereits vorhandene To-Dos</a>
-          <button type="submit" class="btn btn-outline-danger btn-sm ms-3" v-on:click="deleteAllToDoListe"><i class="bi bi-trash3-fill"></i> Alle ToDos löschen</button></th>
+        <div class="">
+          <div class="d-flex justify-content-between mb-3">
+            <div>
+              <span>Todos insgesamt: {{ ToDoListe.length }}</span>
+            </div>
+            <div>
+              <a href="List" class="btn btn-outline-primary btn-sm ms-3" role="button">Bereits vorhandene To-Dos</a>
+              <button type="submit" class="btn btn-outline-danger btn-sm ms-3" v-on:click="deleteAllToDoListe">
+                <i class="bi bi-trash3-fill"></i> Alle ToDos löschen
+              </button>
+            </div>
+          </div>
         </div>
         <table class="table mb-4">
           <thead class="table-light">
@@ -52,25 +61,49 @@
               <span v-if="selectedToDoList !== ToDoList.id">{{ ToDoList.aufgabentitel }}</span>
               <form v-else @submit.prevent="updateToDoListe(ToDoList.id)">
                 <input v-model="getSelectedToDoList(ToDoList.id).updatedAufgabentitel" />
-                <button type="submit">Speichern</button>
+                <button type="submit" class="btn btn-success square-rounded">Speichern</button>
               </form>
             </td>
             <td>{{ ToDoList.aufgabe }}</td>
             <td>{{ new Date(ToDoList.datum).toLocaleDateString() }}</td>
-            <td>{{ ToDoList.dringlichkeit }}</td>
             <td>
-              <button v-if="selectedToDoList !== ToDoList.id" @click="setSelectedToDoList(ToDoList.id)"><i class="bi bi-pencil"></i></button>
-              <button @click="deleteToDoListe(ToDoList.id)"><i class="bi bi-x-circle-fill"></i></button>
+              <div
+                v-bind:class="{
+                    'priority-circle': true,
+                    'high-priority': ToDoList.dringlichkeit === 'HOCH',
+                    'medium-priority': ToDoList.dringlichkeit === 'MITTEL',
+                    'low-priority': ToDoList.dringlichkeit === 'NIEDRIG'
+                  }"
+              >
+                  <span
+                    :class="{
+                      'high-priority-text': ToDoList.dringlichkeit === 'HOCH',
+                      'medium-priority-text': ToDoList.dringlichkeit === 'MITTEL',
+                      'low-priority-text': ToDoList.dringlichkeit === 'NIEDRIG'
+                    }"
+                  >
+                    {{ ToDoList.dringlichkeit }}
+                  </span>
+              </div>
+            </td>
+            <td>
+              <button v-if="selectedToDoList !== ToDoList.id" @click="setSelectedToDoList(ToDoList.id)" class="btn btn-primary me-2">
+                <i class="bi bi-pencil-fill" :class="{ 'active': selectedToDoList === ToDoList.id }"></i>
+              </button>
+              <button @click="deleteToDoListe(ToDoList.id)" class="btn btn-danger ml-5">
+                <i class="bi bi-x-circle-fill" :class="{ 'active': selectedToDoList === ToDoList.id }"></i>
+              </button>
             </td>
           </tr>
           </tbody>
         </table>
         </div>
-      </div>
+  </div>
   </section>
 </template>
 
 <script>
+
 export default {
   name: 'CreateList',
 
@@ -99,7 +132,7 @@ export default {
       .then(response => response.json())
       .then(result => {
         result.forEach(ToDoList => {
-          // Initialisiere das updatedAufgabentitel-Feld für jedes ToDo-Element
+          // Initialisiere das updatedAufgabentitel-Feld für jedes
           ToDoList.updatedAufgabentitel = '';
           this.ToDoListe.push(ToDoList);
         });
@@ -249,21 +282,43 @@ export default {
   height: 50vh;
 }
 
-#list1 .form-control {
-  border-color: transparent;
+ #list1 button.btn-primary {
+   background-color: #61a1e3;
+   color: white;
+ }
+
+#list1 button.btn-danger {
+  background-color: rgba(227, 92, 92, 0.98);
+  color: white;
 }
 
-#list1 .form-control:focus {
-  border-color: transparent;
-  box-shadow: none;
-}
-
-#list1 .select-input.form-control[readonly]:not([disabled]) {
+/* CSS styles for priority options */
+tbody tr:hover{
   background-color: #fbfbfb;
 }
-
-.col-center {
-  margin: 0 auto;
+.priority-circle {
+  display: inline-block;
+  padding: .1rem .5rem; /* Adjust the padding as needed */
+  border-radius: 0.4rem; /* Add a border */
 }
 
+.priority-circle.high-priority {
+  background-color: #fd8888;
+}
+
+.priority-circle.medium-priority {
+  background-color: #f8e07e;
+}
+
+.priority-circle.low-priority {
+  background-color: #9aee9a;
+}
+#list1 button.btn-success.square-rounded {
+  border-radius: 4px; /* Adjust the border radius as needed */
+  background-color: #42b983;
+  color: white;
+  padding: 0.25rem 0.75rem; /* Adjust the padding as needed */
+}
 </style>
+
+
