@@ -163,7 +163,7 @@ export default {
         }
 
         fetch(endpoint, requestOptions)
-          .then(response => response.text())
+          .then(response => response.json()) // Hier Änderung von response.text() zu response.json()
           .then(async result => {
             console.log(result)
             document.location.reload()
@@ -171,6 +171,7 @@ export default {
           .catch(error => console.log('error', error))
       }
     },
+
     getSelectedToDoList(id) {
       return this.ToDoListe.find(toDoList => toDoList.id === id);
     },

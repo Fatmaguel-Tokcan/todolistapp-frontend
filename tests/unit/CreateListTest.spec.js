@@ -90,10 +90,10 @@ describe('CreateList', () => {
 
     // Mock the window.location.reload function
     const reloadMock = jest.fn();
-    Object.defineProperty(window.location, 'reload', {
-      configurable: true,
-      value: reloadMock,
-    });
+    delete window.location;
+    window.location = {
+      reload: reloadMock,
+    };
 
     // Shallow mount the component
     const wrapper = shallowMount(CreateList);
@@ -113,9 +113,9 @@ describe('CreateList', () => {
     // Assert that window.location.reload has been called
     expect(reloadMock).toHaveBeenCalled();
 
-    // Restore the original window.location.reload function
-    delete window.location.reload;
-    window.location.reload = reloadMock;
+    // Restore the original window.location object
+    delete window.location;
+    window.location = windowLocationBackup;
   });
 
 });
