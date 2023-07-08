@@ -9,7 +9,7 @@
   "scripts": {
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit --config tests/unit/jest.config.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
