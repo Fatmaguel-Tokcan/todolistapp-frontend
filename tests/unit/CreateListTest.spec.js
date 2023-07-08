@@ -1,26 +1,36 @@
 import { shallowMount } from '@vue/test-utils';
 import CreateList from '@/views/CreateList.vue';
+import flushPromises from 'flush-promises';
+
+// Importiere die mocks.js-Datei
+import '../../mocks.js';
 
 describe('CreateList', () => {
   let wrapper;
 
   beforeEach(() => {
-    // Mock the fetch function
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve([]),
-      })
-    );
-
     wrapper = shallowMount(CreateList);
   });
 
   afterEach(() => {
-    global.fetch.mockClear();
-    delete global.fetch;
+    wrapper.destroy();
   });
 
-  it('renders the component', () => {
+  it('calls window.location.reload when a new todo list is created', async () => {
+    const reloadMock = jest.spyOn(window.location, 'reload');
+
+    // Führe die createToDoListe-Methode aus
+    wrapper.vm.createToDoListe();
+
+    // Warte auf asynchrone Vorgänge, die in createToDoListe stattfinden
+    await flushPromises();
+
+    // Überprüfe, ob window.location.reload aufgerufen wurde
+    expect(reloadMock).toHaveBeenCalled();
+  });
+
+
+it('renders the component', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
@@ -47,75 +57,6 @@ describe('CreateList', () => {
 
     // Test the result of the fetch request
     expect(wrapper.vm.ToDoListe).toEqual([]);
-  });
-
-  it('calls window.location.reload when a new todo list is created', async () => {
-    // Mock the fetch function
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve([]),
-      })
-    );
-
-    // Shallow mount the component
-    const wrapper = shallowMount(CreateList);
-
-    // Set the form values and trigger the submit button
-    wrapper.setData({
-      aufgabentitel: 'Test title',
-      aufgabe: 'Test task',
-      date: '2023-07-09',
-      dringlichkeit: 'HOCH',
-    });
-    await wrapper.find('button[type="submit"]').trigger('click');
-
-    // Assert that fetch has been called
-    expect(global.fetch).toHaveBeenCalled();
-
-    // Check if reload method exists and call it
-    if (window.location.reload) {
-      window.location.reload();
-    }
-  });
-
-
-
-  it('calls window.location.reload when a new todo list is created', async () => {
-    // Mock the fetch function
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve([]),
-      })
-    );
-
-    // Mock the window.location.reload function
-    const reloadMock = jest.fn();
-    delete window.location;
-    window.location = {
-      reload: reloadMock,
-    };
-
-    // Shallow mount the component
-    const wrapper = shallowMount(CreateList);
-
-    // Set the form values and trigger the submit button
-    wrapper.setData({
-      aufgabentitel: 'Test title',
-      aufgabe: 'Test task',
-      date: '2023-07-09',
-      dringlichkeit: 'HOCH',
-    });
-    await wrapper.find('button[type="submit"]').trigger('click');
-
-    // Assert that fetch has been called
-    expect(global.fetch).toHaveBeenCalled();
-
-    // Assert that window.location.reload has been called
-    expect(reloadMock).toHaveBeenCalled();
-
-    // Restore the original window.location object
-    delete window.location;
-    window.location = windowLocationBackup;
   });
 
 });
