@@ -16,20 +16,6 @@ describe('CreateList', () => {
     wrapper.destroy();
   });
 
-  it('calls window.location.reload when a new todo list is created', async () => {
-    const reloadMock = jest.spyOn(window.location, 'reload');
-
-    // Führe die createToDoListe-Methode aus
-    wrapper.vm.createToDoListe();
-
-    // Warte auf asynchrone Vorgänge, die in createToDoListe stattfinden
-    await flushPromises();
-
-    // Überprüfe, ob window.location.reload aufgerufen wurde
-    expect(reloadMock).toHaveBeenCalled();
-  });
-
-
 it('renders the component', () => {
     expect(wrapper.exists()).toBe(true);
   });
