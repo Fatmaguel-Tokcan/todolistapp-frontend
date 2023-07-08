@@ -173,8 +173,6 @@ export default {
           .catch(error => console.log('error', error))
       }
     },
-
-
     getSelectedToDoList(id) {
       return this.ToDoListe.find(toDoList => toDoList.id === id);
     },
