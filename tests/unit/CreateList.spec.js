@@ -36,4 +36,37 @@ describe('CreateList', () => {
     expect(wrapper.find('input[type="date"]').element.disabled).toBe(true);
     expect(wrapper.find('select').element.disabled).toBe(true);
   });
+  it('should return the total number of ToDo lists', () => {
+    const wrapper = shallowMount(CreateList)
+    wrapper.setData({
+      ToDoListe: [
+        {
+          id: 1,
+          aufgabentitel: 'Test Aufgabentitel 1',
+          aufgabe: 'Test Aufgabe 1',
+          datum: '2023-07-08',
+          dringlichkeit: 'HOCH',
+          erledigt: false
+        },
+        {
+          id: 2,
+          aufgabentitel: 'Test Aufgabentitel 2',
+          aufgabe: 'Test Aufgabe 2',
+          datum: '2023-07-09',
+          dringlichkeit: 'MITTEL',
+          erledigt: false
+        },
+        {
+          id: 3,
+          aufgabentitel: 'Test Aufgabentitel 3',
+          aufgabe: 'Test Aufgabe 3',
+          datum: '2023-07-10',
+          dringlichkeit: 'NIEDRIG',
+          erledigt: false
+        }
+      ]
+    })
+
+    expect(wrapper.vm.ToDoListe.length).toBe(3)
+  })
 });
