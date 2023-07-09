@@ -1,16 +1,24 @@
 <template>
-  <div class="container1" style="background-color: #020202">
+  <div class="container1" style="background-color: #ffffff">
     <div class="p-3 mb-2" style="background-color: #fffefe; color : #6b8de7">
       <div class="home m-5 h-100 d-flex justify-content-center">
       </div>
-      <div class="m-5">
-        <h1>Willkommen zu Humble!</h1>
+      <div class="m-5" style="display: flex; align-items: center;">
+        <img src="../assets/logo.png" alt="Humble" width="60" height="60" class="align-baseline" style="margin-top: -450px;  margin-left: -250px;">
+        <h1 class="text-center" style="margin-top: -450px; margin-left: -0px;" >Willkommen zu Humble!</h1>
       </div>
       <div class="m-5">
-        <p class="text-center">Hallo, mit dieser Webseite kannst du deine To-Dos auflisten und sie nach Fälligkeit prüfen. Wenn du sie erledigt hast kannst du es abhacken.</p>
+        <p class="text-center" style="margin-top: -200px;">
+          Mit Humble kannst du eine ToDoListe erstellen. Du kannst Prioritäten hinzufügen und Fälligkeitsdaten hinzufügen.Erledigte Aufgaben<br>
+          hinzufügen und Fälligkeitsdaten hinzufügen. Erledigte Aufgaben kannst du abhaken und du kannst sie löschen.Im Tab Suche<br>
+          sind die Fälligkeitsdaten im Kalender dargestellt.Sie können außerdem nach den Aufgabentiteln suchen.
+           </p>
       </div>
       <div class="container">
         <div class="center-container">
+          <div class="text-next-to-button">
+            <p>Wenn Sie auf "Liste anschauen" klicken, können Sie<br> sich ihre bisher erstellte ToDoListe anschauen. </p>
+          </div>
           <a href="CreateList" class="btn btn-info square-button" style="background-color:#a2baf2 " role="button">
             <div class="button-content">
               <br>
@@ -20,12 +28,14 @@
                   <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                 </svg>
               </div>
-              <span>Neu</span>
+              <span style="font-size: 18px; font-weight: bold;">Neu</span>
             </div>
           </a>
 
           <div class="gap"></div>
-
+          <div class="text-next-to-button2">
+            <p>Wenn Sie auf "Neu" klicken, können <br>Sie eine neue ToDoListe erstellen. </p>
+          </div>
           <a href="List" class="btn btn-info square-button" style="background-color: #a2baf2" role="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="black" class="bi bi-list-task" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z"/>
@@ -33,19 +43,14 @@
               <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z"/>
             </svg>
             <br>
-            List anschauen
+            <span style="font-size: 18px; font-weight: bold;">Liste anschauen</span>
           </a>
         </div>
       </div>
-
-      <div class="row d-flex justify-content-center">
-        <p class="text-start col-sm-2">1. Sammle To-Dos!
-          Schreibe auf was du in dieser Woche/Monat alles für To-Dos hast. Achte darauf das du deine deine To-Dos in kleinere Aufgaben unterteilst.</p>
-        <p class="col-sm-2">2. Fälligkeitsdatum!
-          Somit kannst du die Zeit im Auge behalten und kannst dir ein Fälligkeitsdatum vermerken.</p>
-        <p class="text-center col-sm-2">3. Abhaken! Um dich selbst zu motivieren, kannst du die erledigt </p>
-      </div>
     </div>
+    <figure class="strichmann">
+      <img src="../assets/strichmann.png">
+    </figure>
   </div>
 </template>
 
@@ -98,7 +103,31 @@
   justify-content: center;
   margin-bottom: 10px;
 }
+.text-next-to-button {
+  position: relative;
+  top: 100px;
+  left: -300px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.text-next-to-button2 {
+  position: relative;
+  top: 100px;
+  right: -250px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
+.text-next-to-button p {
+  text-align: left;
+}
+.strichmann {
+  position: absolute;
+  bottom: 300px;
+  left: -10px;
+  width: 40px;
+  height: 40px;
+}
 </style>
-
-
-
