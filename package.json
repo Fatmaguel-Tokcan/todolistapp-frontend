@@ -21,7 +21,6 @@
     "core-js": "^3.8.3",
     "fetch-mock": "^9.11.0",
     "flush-promises": "^1.0.2",
-    "node-fetch": "^3.3.1",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vue3-datepicker": "^0.4.0"
@@ -43,15 +42,17 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-vue": "^7.0.0",
-    "jest": "^27.0.5"
+    "jest": "^27.0.5",
+    "jest-fetch-mock": "^3.0.3",
+    "node-fetch": "^3.3.1"
+  },
+  "jest": {
+    "preset": "@vue/cli-plugin-unit-jest"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not dead",
     "not ie 11"
-  ],
-  "jest": {
-    "preset": "@vue/cli-plugin-unit-jest"
-  }
+  ]
 }

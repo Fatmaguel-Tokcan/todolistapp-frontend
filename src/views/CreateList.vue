@@ -4,20 +4,20 @@
     <div class="col">
       <div class="mb-3">
         <label htmlFor="exampleFormControlInput1" class="form-label" style="color :#6b8de7" >Aufgabentitel</label>
-        <input type="text" class="form-control" v-model="aufgabentitel" required>
+        <input type="text" class="form-control" v-model="aufgabentitel" :disabled="disableInputs" required>
       </div>
       <div class="mb-3">
         <label htmlFor="exampleFormControlTextarea1" class="form-label" style="color :#6b8de7">Aufgabe</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" v-model="aufgabe" rows="3" required></textarea>
+        <textarea class="form-control" id="exampleFormControlTextarea1" v-model="aufgabe" :disabled="disableInputs" rows="3" required></textarea>
       </div>
       <div class="mb-3">
         <label htmlFor="exampleFormControlTextarea1" class="form-label" style="color :#6b8de7">Fälligkeitsdatum</label>
         <label htmlFor="formDate"></label>
-        <input type="date" class="form-control" v-model="date" required>
+        <input type="date" class="form-control" v-model="date" :disabled="disableInputs" required>
       </div>
     <div class="mb-3">
       <label htmlFor="dringlichkeit" class="form-label" style="color :#6b8de7">Priorität</label>
-      <select class="form-select form-select-sm" id="exampleFormControlTextarea2" v-model="dringlichkeit" required>
+      <select class="form-select form-select-sm" id="exampleFormControlTextarea2" v-model="dringlichkeit" :disabled="disableInputs" required>
         <option value="" selected disabled>Wählen Sie bitte</option>
         <option value="HOCH">hoch</option>
         <option value="MITTEL">mittel</option>
@@ -117,7 +117,8 @@ export default {
       dringlichkeit: '',
       erledigt:false,
       updatedAufgabentitel: '',
-      ToDoListe: []
+      ToDoListe: [],
+      disableInputs: false
     }
   },
 
@@ -144,6 +145,8 @@ export default {
       if (this.aufgabentitel === '' || this.aufgabe === '' || this.dringlichkeit === '') {
         alert('Die Felder "Aufgabentitel", "Aufgabenbeschreibung" und "Priorität" dürfen nicht leer sein.')
       } else {
+        this.disableInputs = true; // Deaktiviere die Eingabefelder
+
         const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/todolist'
         const myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
@@ -163,16 +166,15 @@ export default {
         }
 
         fetch(endpoint, requestOptions)
-          .then(response => response.json())
+          .then(response => response.text())
           .then(async result => {
-            console.log(result);
-            if (window && window.location && window.location.reload) {
-              window.location.reload();
-            }
+            console.log(result)
+            document.location.reload()
           })
           .catch(error => console.log('error', error))
       }
     },
+
     getSelectedToDoList(id) {
       return this.ToDoListe.find(toDoList => toDoList.id === id);
     },
