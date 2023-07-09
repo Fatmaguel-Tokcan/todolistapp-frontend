@@ -69,4 +69,17 @@ describe('CreateList', () => {
 
     expect(wrapper.vm.ToDoListe.length).toBe(3)
   })
+  it('initializes the component with empty input fields', () => {
+    const wrapper = shallowMount(CreateList);
+    expect(wrapper.vm.aufgabentitel).toBe('');
+    expect(wrapper.vm.aufgabe).toBe('');
+    expect(wrapper.vm.date).toBe(null);
+    expect(wrapper.vm.dringlichkeit).toBe('');
+  });
+
+  it('renders the component properly', () => {
+    const wrapper = shallowMount(CreateList);
+    expect(wrapper.exists()).toBe(true);
+  });
+
 });
